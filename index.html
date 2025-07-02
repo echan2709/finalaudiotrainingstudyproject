@@ -15,6 +15,36 @@
     .warning { background: #333; color: #ffd700; padding: 1em; border-radius: 8px; margin-bottom: 2em; }
     .hidden { display: none; }
   </style>
+  <style>
+    /* Hide timeline and time displays in most browsers */
+    audio::-webkit-media-controls-timeline,
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display {
+      display: none !important;
+    }
+    audio::-webkit-media-controls-time-remaining-display {
+      display: none !important;
+    }
+    audio::-webkit-media-controls-seek-back-button,
+    audio::-webkit-media-controls-seek-forward-button {
+      display: none !important;
+    }
+    audio::-webkit-media-controls-mute-button {
+      display: inline !important;
+    }
+    audio::-webkit-media-controls-volume-slider {
+      display: inline !important;
+    }
+    /* For Firefox */
+    audio::-moz-range-thumb {
+      visibility: hidden;
+    }
+    /* For Edge/IE (limited support) */
+    audio::-ms-fill-lower,
+    audio::-ms-fill-upper {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
   <h1>Audio in Medical Training Study</h1>
