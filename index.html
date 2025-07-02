@@ -3,107 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <title>Audio in Medical Training Study</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #001f4d; /* Navy */
       margin: 0;
-      background: #191d2b;
-      color: #f5f6fa;
       min-height: 100vh;
     }
     .container {
       max-width: 700px;
       margin: 2em auto;
       padding: 2em;
-      background: #232946;
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(30,40,80,0.10);
+      background: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 31, 77, 0.1);
     }
     h1 {
-      color: #ffd700;
       text-align: center;
+      color: #001f4d;
       margin-bottom: 0.3em;
+      font-weight: 700;
     }
     .notice {
-      background: #ffe066;
-      color: #232946;
+      background: #dbe9ff;
+      color: #001f4d;
+      border-left: 6px solid #00509e;
       padding: 1em 1.5em;
       border-radius: 8px;
       margin-bottom: 2em;
-      font-weight: 500;
-      border-left: 6px solid #ffd700;
+      font-weight: 600;
+      font-size: 1rem;
     }
     .question-card {
-      background: #2a2d43;
+      background: #ffffff;
+      border: 2px solid #cbd6e2;
       border-radius: 12px;
-      padding: 1.5em 1em 1em 1em;
+      padding: 1.5em 1.5em 1em 1.5em;
       margin-bottom: 2em;
-      box-shadow: 0 2px 8px rgba(30,40,80,0.04);
+      transition: border-color 0.3s ease;
+    }
+    .question-card:hover {
+      border-color: #00509e;
+      box-shadow: 0 0 10px rgba(0, 80, 158, 0.3);
     }
     .question-title {
-      font-size: 1.15em;
+      font-size: 1.2rem;
+      font-weight: 700;
       margin-bottom: 1.2em;
-      font-weight: 600;
-      color: #ffd700;
+      color: #001f4d;
+      line-height: 1.3;
     }
     .audio-row {
       display: flex;
-      gap: 1em;
+      gap: 1.5em;
       flex-wrap: wrap;
-      margin-bottom: 1.2em;
+      margin-bottom: 1.5em;
       justify-content: flex-start;
     }
     .audio-block {
       flex: 1 1 180px;
       min-width: 160px;
-      background: #232946;
-      padding: 1em 0.5em 0.5em 0.5em;
-      border-radius: 8px;
+      background: #e6f0ff;
+      padding: 1em 1em 0.8em 1em;
+      border-radius: 10px;
       text-align: center;
-      box-shadow: 0 1px 3px rgba(30,40,80,0.08);
+      box-shadow: 0 1px 5px rgba(0, 80, 158, 0.15);
     }
     .audio-label {
-      font-weight: 600;
-      margin-bottom: 0.5em;
+      font-weight: 700;
+      margin-bottom: 0.6em;
       display: block;
-      color: #ffe066;
+      color: #003366;
     }
     .audio-block button {
-      background: #ffd700;
-      color: #232946;
+      background: #00509e;
+      color: #fff;
       border: none;
-      border-radius: 20px;
-      padding: 0.5em 1.2em;
-      font-size: 1em;
+      border-radius: 24px;
+      padding: 0.5em 1.4em;
+      font-size: 1rem;
       margin: 0.3em 0.2em;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.25s ease;
+      user-select: none;
     }
     .audio-block button:hover {
-      background: #ffe066;
+      background: #003366;
     }
     .answer-row {
       display: flex;
       gap: 1em;
       margin-top: 0.5em;
       justify-content: flex-start;
+      flex-wrap: wrap;
     }
     .answer-btn {
-      background: #393e6e;
-      color: #ffd700;
-      border: 2px solid #393e6e;
-      border-radius: 20px;
-      padding: 0.5em 1.5em;
-      font-size: 1em;
+      flex: 1 1 120px;
+      background: #cbd6e2;
+      border: 2px solid #cbd6e2;
+      border-radius: 16px;
+      padding: 0.8em 1em;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #001f4d;
+      text-align: center;
       cursor: pointer;
-      transition: background 0.2s, border 0.2s;
-      margin-bottom: 0.5em;
+      transition: background 0.3s, border-color 0.3s, color 0.3s;
+      user-select: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5em;
+    }
+    .answer-btn:hover {
+      background: #00509e;
+      border-color: #00509e;
+      color: #fff;
     }
     .answer-btn.selected {
-      background: #ffd700;
-      color: #232946;
-      border: 2px solid #ffd700;
+      background: #003366;
+      border-color: #003366;
+      color: #fff;
+      box-shadow: 0 0 8px rgba(0, 48, 102, 0.8);
     }
     .question-card input[type="radio"] {
       display: none;
@@ -111,33 +134,48 @@
     button[type="submit"] {
       display: block;
       margin: 2em auto 0 auto;
-      background: #ffd700;
-      color: #232946;
-      font-size: 1.15em;
+      background: #001f4d;
+      color: #fff;
+      font-size: 1.3rem;
       border: none;
-      border-radius: 24px;
-      padding: 0.8em 2.5em;
+      border-radius: 32px;
+      padding: 0.9em 3em;
       font-weight: 700;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background 0.3s ease;
+      user-select: none;
     }
     button[type="submit"]:hover {
-      background: #ffe066;
+      background: #003366;
     }
     .result {
-      background: #23203a;
-      padding: 1em;
+      background: #e6f0ff;
+      padding: 1.2em;
       margin-top: 2em;
-      color: #fff;
-      border-radius: 8px;
+      color: #001f4d;
+      border-radius: 12px;
       text-align: center;
-      font-size: 1.1em;
+      font-size: 1.15rem;
+      font-weight: 700;
+      box-shadow: 0 0 12px rgba(0, 80, 158, 0.3);
     }
     @media (max-width: 600px) {
-      .container { padding: 1em; }
-      .audio-row { flex-direction: column; }
-      .audio-block { min-width: unset; }
-      .answer-row { flex-direction: column; }
+      .container {
+        margin: 1em;
+        padding: 1.5em;
+      }
+      .audio-row {
+        flex-direction: column;
+      }
+      .audio-block {
+        min-width: unset;
+      }
+      .answer-row {
+        flex-direction: column;
+      }
+      .answer-btn {
+        flex: 1 1 auto;
+      }
     }
     /* Hide audio timeline and time displays */
     audio::-webkit-media-controls-timeline,
@@ -147,9 +185,13 @@
     audio::-webkit-media-controls-seek-forward-button {
       display: none !important;
     }
-    audio::-moz-range-thumb { visibility: hidden; }
+    audio::-moz-range-thumb {
+      visibility: hidden;
+    }
     audio::-ms-fill-lower,
-    audio::-ms-fill-upper { display: none !important; }
+    audio::-ms-fill-upper {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
@@ -164,17 +206,19 @@
         <div class="question-title">Are you a medical professional?</div>
         <div class="answer-row">
           <label class="answer-btn" id="pro-yes">
-            <input type="radio" name="medical_professional" value="Yes" required> Yes
+            <input type="radio" name="medical_professional" value="Yes" required /> Yes
           </label>
           <label class="answer-btn" id="pro-no">
-            <input type="radio" name="medical_professional" value="No" required> No
+            <input type="radio" name="medical_professional" value="No" required /> No
           </label>
         </div>
       </div>
 
       <!-- Question 1 -->
       <div class="question-card">
-        <div class="question-title">1. Listen to the two audios below. Click the one that sounds healthy.</div>
+        <div class="question-title">
+          1. Listen carefully to the two audio clips below. One is from a completely healthy infant, and the other has underlying respiratory conditions. After listening, click the audio you think sounds healthy.
+        </div>
         <div class="audio-row">
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
@@ -193,15 +237,23 @@
             </div>
           </div>
         </div>
-        <div class="answer-row">
-          <label class="answer-btn"><input type="radio" name="q1" value="A" required> Audio A</label>
-          <label class="answer-btn"><input type="radio" name="q1" value="B" required> Audio B</label>
+        <div class="answer-row" role="radiogroup" aria-label="Select which audio sounds healthy for question 1">
+          <label class="answer-btn">
+            <input type="radio" name="q1" value="A" required />
+            I think Audio A sounds healthy
+          </label>
+          <label class="answer-btn">
+            <input type="radio" name="q1" value="B" required />
+            I think Audio B sounds healthy
+          </label>
         </div>
       </div>
 
       <!-- Question 2 -->
       <div class="question-card">
-        <div class="question-title">2. Listen to the two audios below. Click the one that sounds healthy.</div>
+        <div class="question-title">
+          2. Listen carefully to the two audio clips below. One is from a completely healthy infant, and the other has underlying respiratory conditions. After listening, click the audio you think sounds healthy.
+        </div>
         <div class="audio-row">
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
@@ -220,15 +272,23 @@
             </div>
           </div>
         </div>
-        <div class="answer-row">
-          <label class="answer-btn"><input type="radio" name="q2" value="A" required> Audio A</label>
-          <label class="answer-btn"><input type="radio" name="q2" value="B" required> Audio B</label>
+        <div class="answer-row" role="radiogroup" aria-label="Select which audio sounds healthy for question 2">
+          <label class="answer-btn">
+            <input type="radio" name="q2" value="A" required />
+            I think Audio A sounds healthy
+          </label>
+          <label class="answer-btn">
+            <input type="radio" name="q2" value="B" required />
+            I think Audio B sounds healthy
+          </label>
         </div>
       </div>
 
       <!-- Question 3 -->
       <div class="question-card">
-        <div class="question-title">3. Listen to the two audios below. Click the one that sounds healthy.</div>
+        <div class="question-title">
+          3. Listen carefully to the two audio clips below. One is from a completely healthy infant, and the other has underlying respiratory conditions. After listening, click the audio you think sounds healthy.
+        </div>
         <div class="audio-row">
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
@@ -247,15 +307,23 @@
             </div>
           </div>
         </div>
-        <div class="answer-row">
-          <label class="answer-btn"><input type="radio" name="q3" value="A" required> Audio A</label>
-          <label class="answer-btn"><input type="radio" name="q3" value="B" required> Audio B</label>
+        <div class="answer-row" role="radiogroup" aria-label="Select which audio sounds healthy for question 3">
+          <label class="answer-btn">
+            <input type="radio" name="q3" value="A" required />
+            I think Audio A sounds healthy
+          </label>
+          <label class="answer-btn">
+            <input type="radio" name="q3" value="B" required />
+            I think Audio B sounds healthy
+          </label>
         </div>
       </div>
 
       <!-- Question 4 -->
       <div class="question-card">
-        <div class="question-title">4. Between these two audios, which one sounds like it is in a higher state of distress?</div>
+        <div class="question-title">
+          4. Between these two audio clips, which one sounds like it is in a higher state of distress?
+        </div>
         <div class="audio-row">
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
@@ -274,15 +342,23 @@
             </div>
           </div>
         </div>
-        <div class="answer-row">
-          <label class="answer-btn"><input type="radio" name="q4" value="A" required> Audio A</label>
-          <label class="answer-btn"><input type="radio" name="q4" value="B" required> Audio B</label>
+        <div class="answer-row" role="radiogroup" aria-label="Select which audio sounds like it is in higher distress for question 4">
+          <label class="answer-btn">
+            <input type="radio" name="q4" value="A" required />
+            I think Audio A is in higher distress
+          </label>
+          <label class="answer-btn">
+            <input type="radio" name="q4" value="B" required />
+            I think Audio B is in higher distress
+          </label>
         </div>
       </div>
 
       <!-- Question 5 -->
       <div class="question-card">
-        <div class="question-title">5. Between these two audios, which one sounds like it has respiratory problems?</div>
+        <div class="question-title">
+          5. Between these two audio clips, which one sounds like it has respiratory problems?
+        </div>
         <div class="audio-row">
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
@@ -301,16 +377,25 @@
             </div>
           </div>
         </div>
-        <div class="answer-row">
-          <label class="answer-btn"><input type="radio" name="q5" value="A" required> Audio A</label>
-          <label class="answer-btn"><input type="radio" name="q5" value="B" required> Audio B</label>
+        <div class="answer-row" role="radiogroup" aria-label="Select which audio sounds like it has respiratory problems for question 5">
+          <label class="answer-btn">
+            <input type="radio" name="q5" value="A" required />
+            I think Audio A has respiratory problems
+          </label>
+          <label class="answer-btn">
+            <input type="radio" name="q5" value="B" required />
+            I think Audio B has respiratory problems
+          </label>
         </div>
       </div>
 
-      <div id="thankyou" class="result" style="display:none;">Thank you for participating! Your responses have been submitted.</div>
+      <div id="thankyou" class="result" style="display:none;">
+        Thank you for participating! Your responses have been submitted.
+      </div>
       <button type="submit" id="submitBtn">Submit</button>
     </form>
   </div>
+
   <script>
     // Play/pause audio and pause others
     function playAudio(id) {
@@ -325,7 +410,7 @@
 
     // Highlight selected answer
     document.querySelectorAll('.answer-row').forEach(row => {
-      row.addEventListener('change', function(e) {
+      row.addEventListener('change', function (e) {
         if (e.target.type === 'radio') {
           row.querySelectorAll('.answer-btn').forEach(btn => btn.classList.remove('selected'));
           e.target.closest('.answer-btn').classList.add('selected');
@@ -333,11 +418,11 @@
       });
     });
     // Medical professional highlight
-    document.getElementById('pro-yes').addEventListener('click', function() {
+    document.getElementById('pro-yes').addEventListener('click', function () {
       document.getElementById('pro-yes').classList.add('selected');
       document.getElementById('pro-no').classList.remove('selected');
     });
-    document.getElementById('pro-no').addEventListener('click', function() {
+    document.getElementById('pro-no').addEventListener('click', function () {
       document.getElementById('pro-no').classList.add('selected');
       document.getElementById('pro-yes').classList.remove('selected');
     });
