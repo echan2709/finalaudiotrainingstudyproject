@@ -3,185 +3,346 @@
 <head>
   <meta charset="UTF-8" />
   <title>Audio in Medical Training Study</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial, sans-serif; margin: 2em; background: #181024; color: #fff; }
-    h1 { color: #ffd700; }
-    .question { margin-bottom: 2em; }
-    .audio-row { display: flex; gap: 2em; margin-bottom: 1em; }
-    .audio-block { flex: 1; }
-    button { margin-top: 2em; }
-    .result { background: #23203a; padding: 1em; margin-top: 2em; color: #fff; border-radius: 8px; }
-    label { font-size: 1.1em; }
-    .warning { background: #333; color: #ffd700; padding: 1em; border-radius: 8px; margin-bottom: 2em; }
-    .hidden { display: none; }
-  </style>
-  <style>
-    /* Hide timeline and time displays in most browsers */
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #191d2b;
+      color: #f5f6fa;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 700px;
+      margin: 2em auto;
+      padding: 2em;
+      background: #232946;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(30,40,80,0.10);
+    }
+    h1 {
+      color: #ffd700;
+      text-align: center;
+      margin-bottom: 0.3em;
+    }
+    .notice {
+      background: #ffe066;
+      color: #232946;
+      padding: 1em 1.5em;
+      border-radius: 8px;
+      margin-bottom: 2em;
+      font-weight: 500;
+      border-left: 6px solid #ffd700;
+    }
+    .question-card {
+      background: #2a2d43;
+      border-radius: 12px;
+      padding: 1.5em 1em 1em 1em;
+      margin-bottom: 2em;
+      box-shadow: 0 2px 8px rgba(30,40,80,0.04);
+    }
+    .question-title {
+      font-size: 1.15em;
+      margin-bottom: 1.2em;
+      font-weight: 600;
+      color: #ffd700;
+    }
+    .audio-row {
+      display: flex;
+      gap: 1em;
+      flex-wrap: wrap;
+      margin-bottom: 1.2em;
+      justify-content: flex-start;
+    }
+    .audio-block {
+      flex: 1 1 180px;
+      min-width: 160px;
+      background: #232946;
+      padding: 1em 0.5em 0.5em 0.5em;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(30,40,80,0.08);
+    }
+    .audio-label {
+      font-weight: 600;
+      margin-bottom: 0.5em;
+      display: block;
+      color: #ffe066;
+    }
+    .audio-block button {
+      background: #ffd700;
+      color: #232946;
+      border: none;
+      border-radius: 20px;
+      padding: 0.5em 1.2em;
+      font-size: 1em;
+      margin: 0.3em 0.2em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .audio-block button:hover {
+      background: #ffe066;
+    }
+    .answer-row {
+      display: flex;
+      gap: 1em;
+      margin-top: 0.5em;
+      justify-content: flex-start;
+    }
+    .answer-btn {
+      background: #393e6e;
+      color: #ffd700;
+      border: 2px solid #393e6e;
+      border-radius: 20px;
+      padding: 0.5em 1.5em;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s, border 0.2s;
+      margin-bottom: 0.5em;
+    }
+    .answer-btn.selected {
+      background: #ffd700;
+      color: #232946;
+      border: 2px solid #ffd700;
+    }
+    .question-card input[type="radio"] {
+      display: none;
+    }
+    button[type="submit"] {
+      display: block;
+      margin: 2em auto 0 auto;
+      background: #ffd700;
+      color: #232946;
+      font-size: 1.15em;
+      border: none;
+      border-radius: 24px;
+      padding: 0.8em 2.5em;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button[type="submit"]:hover {
+      background: #ffe066;
+    }
+    .result {
+      background: #23203a;
+      padding: 1em;
+      margin-top: 2em;
+      color: #fff;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.1em;
+    }
+    @media (max-width: 600px) {
+      .container { padding: 1em; }
+      .audio-row { flex-direction: column; }
+      .audio-block { min-width: unset; }
+      .answer-row { flex-direction: column; }
+    }
+    /* Hide audio timeline and time displays */
     audio::-webkit-media-controls-timeline,
     audio::-webkit-media-controls-current-time-display,
-    audio::-webkit-media-controls-time-remaining-display {
-      display: none !important;
-    }
-    audio::-webkit-media-controls-time-remaining-display {
-      display: none !important;
-    }
+    audio::-webkit-media-controls-time-remaining-display,
     audio::-webkit-media-controls-seek-back-button,
     audio::-webkit-media-controls-seek-forward-button {
       display: none !important;
     }
-    audio::-webkit-media-controls-mute-button {
-      display: inline !important;
-    }
-    audio::-webkit-media-controls-volume-slider {
-      display: inline !important;
-    }
-    /* For Firefox */
-    audio::-moz-range-thumb {
-      visibility: hidden;
-    }
-    /* For Edge/IE (limited support) */
+    audio::-moz-range-thumb { visibility: hidden; }
     audio::-ms-fill-lower,
-    audio::-ms-fill-upper {
-      display: none !important;
-    }
+    audio::-ms-fill-upper { display: none !important; }
   </style>
 </head>
 <body>
-  <h1>Audio in Medical Training Study</h1>
-  <div class="warning">
-    <strong>Privacy Notice:</strong> Your name will not be published. Only your survey responses will be used for research purposes in this study.
+  <div class="container">
+    <h1>Audio in Medical Training Study</h1>
+    <div class="notice">
+      <strong>Privacy Notice:</strong> Your name will not be published. Only your survey responses will be used for research purposes in this study.
+    </div>
+    <form id="surveyForm" action="https://formspree.io/f/xnnvrpzd" method="POST">
+
+      <div class="question-card">
+        <div class="question-title">Are you a medical professional?</div>
+        <div class="answer-row">
+          <label class="answer-btn" id="pro-yes">
+            <input type="radio" name="medical_professional" value="Yes" required> Yes
+          </label>
+          <label class="answer-btn" id="pro-no">
+            <input type="radio" name="medical_professional" value="No" required> No
+          </label>
+        </div>
+      </div>
+
+      <!-- Question 1 -->
+      <div class="question-card">
+        <div class="question-title">1. Listen to the two audios below. Click the one that sounds healthy.</div>
+        <div class="audio-row">
+          <div class="audio-block">
+            <span class="audio-label">Audio A</span>
+            <audio id="audio1A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio1A')">Play</button>
+              <button type="button" onclick="pauseAudio('audio1A')">Pause</button>
+            </div>
+          </div>
+          <div class="audio-block">
+            <span class="audio-label">Audio B</span>
+            <audio id="audio1B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingsoftgrunting.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio1B')">Play</button>
+              <button type="button" onclick="pauseAudio('audio1B')">Pause</button>
+            </div>
+          </div>
+        </div>
+        <div class="answer-row">
+          <label class="answer-btn"><input type="radio" name="q1" value="A" required> Audio A</label>
+          <label class="answer-btn"><input type="radio" name="q1" value="B" required> Audio B</label>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-card">
+        <div class="question-title">2. Listen to the two audios below. Click the one that sounds healthy.</div>
+        <div class="audio-row">
+          <div class="audio-block">
+            <span class="audio-label">Audio A</span>
+            <audio id="audio2A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio2A')">Play</button>
+              <button type="button" onclick="pauseAudio('audio2A')">Pause</button>
+            </div>
+          </div>
+          <div class="audio-block">
+            <span class="audio-label">Audio B</span>
+            <audio id="audio2B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio2B')">Play</button>
+              <button type="button" onclick="pauseAudio('audio2B')">Pause</button>
+            </div>
+          </div>
+        </div>
+        <div class="answer-row">
+          <label class="answer-btn"><input type="radio" name="q2" value="A" required> Audio A</label>
+          <label class="answer-btn"><input type="radio" name="q2" value="B" required> Audio B</label>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-card">
+        <div class="question-title">3. Listen to the two audios below. Click the one that sounds healthy.</div>
+        <div class="audio-row">
+          <div class="audio-block">
+            <span class="audio-label">Audio A</span>
+            <audio id="audio3A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio3A')">Play</button>
+              <button type="button" onclick="pauseAudio('audio3A')">Pause</button>
+            </div>
+          </div>
+          <div class="audio-block">
+            <span class="audio-label">Audio B</span>
+            <audio id="audio3B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstrider.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio3B')">Play</button>
+              <button type="button" onclick="pauseAudio('audio3B')">Pause</button>
+            </div>
+          </div>
+        </div>
+        <div class="answer-row">
+          <label class="answer-btn"><input type="radio" name="q3" value="A" required> Audio A</label>
+          <label class="answer-btn"><input type="radio" name="q3" value="B" required> Audio B</label>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-card">
+        <div class="question-title">4. Between these two audios, which one sounds like it is in a higher state of distress?</div>
+        <div class="audio-row">
+          <div class="audio-block">
+            <span class="audio-label">Audio A</span>
+            <audio id="audio4A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingsoftgrunting.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio4A')">Play</button>
+              <button type="button" onclick="pauseAudio('audio4A')">Pause</button>
+            </div>
+          </div>
+          <div class="audio-block">
+            <span class="audio-label">Audio B</span>
+            <audio id="audio4B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio4B')">Play</button>
+              <button type="button" onclick="pauseAudio('audio4B')">Pause</button>
+            </div>
+          </div>
+        </div>
+        <div class="answer-row">
+          <label class="answer-btn"><input type="radio" name="q4" value="A" required> Audio A</label>
+          <label class="answer-btn"><input type="radio" name="q4" value="B" required> Audio B</label>
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question-card">
+        <div class="question-title">5. Between these two audios, which one sounds like it has respiratory problems?</div>
+        <div class="audio-row">
+          <div class="audio-block">
+            <span class="audio-label">Audio A</span>
+            <audio id="audio5A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio5A')">Play</button>
+              <button type="button" onclick="pauseAudio('audio5A')">Pause</button>
+            </div>
+          </div>
+          <div class="audio-block">
+            <span class="audio-label">Audio B</span>
+            <audio id="audio5B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstrider.mp3?v=2"></audio>
+            <div>
+              <button type="button" onclick="playAudio('audio5B')">Play</button>
+              <button type="button" onclick="pauseAudio('audio5B')">Pause</button>
+            </div>
+          </div>
+        </div>
+        <div class="answer-row">
+          <label class="answer-btn"><input type="radio" name="q5" value="A" required> Audio A</label>
+          <label class="answer-btn"><input type="radio" name="q5" value="B" required> Audio B</label>
+        </div>
+      </div>
+
+      <div id="thankyou" class="result" style="display:none;">Thank you for participating! Your responses have been submitted.</div>
+      <button type="submit" id="submitBtn">Submit</button>
+    </form>
   </div>
-  <form id="surveyForm" action="https://formspree.io/f/xnnvrpzd" method="POST">
-    <!-- Medical Professional Question -->
-    <div class="question">
-      <label><strong>Are you a medical professional?</strong></label><br />
-      <label><input type="radio" name="medical_professional" value="Yes" required /> Yes</label>
-      <label><input type="radio" name="medical_professional" value="No" required /> No</label>
-    </div>
-
-    <!-- Q1: Audio A vs Audio B -->
-    <div class="question">
-      <div><strong>1. Listen to the two audios below. Click the one that sounds healthy.</strong></div>
-      <div class="audio-row">
-        <div class="audio-block">
-          <div><b>Audio A</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q1" value="A" required />
-            Select Audio A
-          </label>
-        </div>
-        <div class="audio-block">
-          <div><b>Audio B</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingsoftgrunting.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q1" value="B" required />
-            Select Audio B
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q2: Audio A vs Audio B -->
-    <div class="question">
-      <div><strong>2. Listen to the two audios below. Click the one that sounds healthy.</strong></div>
-      <div class="audio-row">
-        <div class="audio-block">
-          <div><b>Audio A</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q2" value="A" required />
-            Select Audio A
-          </label>
-        </div>
-        <div class="audio-block">
-          <div><b>Audio B</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q2" value="B" required />
-            Select Audio B
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q3: Audio A vs Audio B -->
-    <div class="question">
-      <div><strong>3. Listen to the two audios below. Click the one that sounds healthy.</strong></div>
-      <div class="audio-row">
-        <div class="audio-block">
-          <div><b>Audio A</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q3" value="A" required />
-            Select Audio A
-          </label>
-        </div>
-        <div class="audio-block">
-          <div><b>Audio B</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstrider.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q3" value="B" required />
-            Select Audio B
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q4: Audio A vs Audio B (higher distress) -->
-    <div class="question">
-      <div><strong>4. Between these two audios, which one sounds like it is in a higher state of distress?</strong></div>
-      <div class="audio-row">
-        <div class="audio-block">
-          <div><b>Audio A</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingsoftgrunting.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q4" value="A" required />
-            Select Audio A
-          </label>
-        </div>
-        <div class="audio-block">
-          <div><b>Audio B</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q4" value="B" required />
-            Select Audio B
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Q5: Audio A vs Audio B (respiratory problems) -->
-    <div class="question">
-      <div><strong>5. Between these two audios, which one sounds like it has respiratory problems?</strong></div>
-      <div class="audio-row">
-        <div class="audio-block">
-          <div><b>Audio A</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q5" value="A" required />
-            Select Audio A
-          </label>
-        </div>
-        <div class="audio-block">
-          <div><b>Audio B</b></div>
-          <audio controls src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstrider.mp3?v=2"></audio><br />
-          <label>
-            <input type="radio" name="q5" value="B" required />
-            Select Audio B
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <!-- Anti-spam honeypot -->
-    <input type="text" name="_honey" style="display:none" />
-    <!-- Success message -->
-    <div id="thankyou" class="result hidden">Thank you for participating! Your responses have been submitted.</div>
-    <button type="submit" id="submitBtn">Submit</button>
-  </form>
   <script>
-    // Show thank you message and hide form after submit
+    // Play/pause audio and pause others
+    function playAudio(id) {
+      document.querySelectorAll('audio').forEach(aud => {
+        if (aud.id !== id) aud.pause();
+      });
+      document.getElementById(id).play();
+    }
+    function pauseAudio(id) {
+      document.getElementById(id).pause();
+    }
+
+    // Highlight selected answer
+    document.querySelectorAll('.answer-row').forEach(row => {
+      row.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+          row.querySelectorAll('.answer-btn').forEach(btn => btn.classList.remove('selected'));
+          e.target.closest('.answer-btn').classList.add('selected');
+        }
+      });
+    });
+    // Medical professional highlight
+    document.getElementById('pro-yes').addEventListener('click', function() {
+      document.getElementById('pro-yes').classList.add('selected');
+      document.getElementById('pro-no').classList.remove('selected');
+    });
+    document.getElementById('pro-no').addEventListener('click', function() {
+      document.getElementById('pro-no').classList.add('selected');
+      document.getElementById('pro-yes').classList.remove('selected');
+    });
+
+    // AJAX form submit
     document.getElementById('surveyForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var form = this;
@@ -192,8 +353,10 @@
       xhr.onreadystatechange = function () {
         if (xhr.readyState !== XMLHttpRequest.DONE) return;
         form.reset();
-        document.getElementById('thankyou').classList.remove('hidden');
+        document.getElementById('thankyou').style.display = 'block';
         document.getElementById('submitBtn').style.display = 'none';
+        // Remove highlights
+        document.querySelectorAll('.answer-btn').forEach(btn => btn.classList.remove('selected'));
       };
       xhr.send(data);
     });
