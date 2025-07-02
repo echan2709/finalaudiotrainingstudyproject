@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Audio in Medical Training Study</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 2em; background: #181024; color: #fff; }
+    h1 { color: #ffd700; }
+    .question { margin-bottom: 2em; }
+    .audio-row { display: flex; gap: 2em; margin-bottom: 1em; }
+    .audio-block { flex: 1; }
+    button { margin-top: 2em; }
+    .result { background: #23203a; padding: 1em; margin-top: 2em; color: #fff; border-radius: 8px; }
+    label { font-size: 1.1em; }
+    .warning { background: #333; color: #ffd700; padding: 1em; border-radius: 8px; margin-bottom: 2em; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Audio in Medical Training Study</h1>
+  <div class="warning">
+    <strong>Privacy Notice:</strong> Your name will not be published. Only your survey responses will be used for research purposes in this study.
+  </div>
+  <form id="surveyForm" action="https://formspree.io/f/xnnvrpzd" method="POST">
+    <!-- Medical Professional Question -->
+    <div class="question">
+      <label><strong>Are you a medical professional?</strong></label><br>
+      <label><input type="radio" name="medical_professional" value="Yes" required> Yes</label>
+      <label><input type="radio" name="medical_professional" value="No" required> No</label>
+    </div>
+
+    <!-- Q1: Regular cry vs soft grunting -->
+    <div class="question">
+      <div><strong>1. Listen to the two audios below. Click the one that sounds healthy.</strong></div>
+      <div class="audio-row">
+        <div class="audio-block">
+          <div><b>Audio A</b></div>
+          <audio controls src="healthybabycry.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q1" value="A" required>
+            Select Audio A
+          </label>
+        </div>
+        <div class="audio-block">
+          <div><b>Audio B</b></div>
+          <audio controls src="cryingsoftgrunting.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q1" value="B" required>
+            Select Audio B
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q2: Regular cry vs strong grunting -->
+    <div class="question">
+      <div><strong>2. Listen to the two audios below. Click the one that sounds healthy.</strong></div>
+      <div class="audio-row">
+        <div class="audio-block">
+          <div><b>Audio A</b></div>
+          <audio controls src="healthybabycry.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q2" value="A" required>
+            Select Audio A
+          </label>
+        </div>
+        <div class="audio-block">
+          <div><b>Audio B</b></div>
+          <audio controls src="cryingstronggrunting.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q2" value="B" required>
+            Select Audio B
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q3: Regular cry vs strider -->
+    <div class="question">
+      <div><strong>3. Listen to the two audios below. Click the one that sounds healthy.</strong></div>
+      <div class="audio-row">
+        <div class="audio-block">
+          <div><b>Audio A</b></div>
+          <audio controls src="healthybabycry.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q3" value="A" required>
+            Select Audio A
+          </label>
+        </div>
+        <div class="audio-block">
+          <div><b>Audio B</b></div>
+          <audio controls src="cryingstrider.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q3" value="B" required>
+            Select Audio B
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q4: Soft grunting vs strong grunting (higher distress) -->
+    <div class="question">
+      <div><strong>4. Between these two audios, which one sounds like it is in a higher state of distress?</strong></div>
+      <div class="audio-row">
+        <div class="audio-block">
+          <div><b>Audio A</b></div>
+          <audio controls src="softgruntingonly.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q4" value="A" required>
+            Select Audio A
+          </label>
+        </div>
+        <div class="audio-block">
+          <div><b>Audio B</b></div>
+          <audio controls src="stronggruntingonly.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q4" value="B" required>
+            Select Audio B
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Q5: Strong grunting vs strider (respiratory problems) -->
+    <div class="question">
+      <div><strong>5. Between these two audios, which one sounds like it has respiratory problems?</strong></div>
+      <div class="audio-row">
+        <div class="audio-block">
+          <div><b>Audio A</b></div>
+          <audio controls src="stronggruntingonly.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q5" value="A" required>
+            Select Audio A
+          </label>
+        </div>
+        <div class="audio-block">
+          <div><b>Audio B</b></div>
+          <audio controls src="strideronly.mp3"></audio><br>
+          <label>
+            <input type="radio" name="q5" value="B" required>
+            Select Audio B
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Anti-spam honeypot -->
+    <input type="text" name="_honey" style="display:none">
+    <!-- Success message -->
+    <div id="thankyou" class="result hidden">Thank you for participating! Your responses have been submitted.</div>
+    <button type="submit" id="submitBtn">Submit</button>
+  </form>
+  <script>
+    // Show thank you message and hide form after submit
+    document.getElementById('surveyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      var data = new FormData(form);
+      var xhr = new XMLHttpRequest();
+      xhr.open(form.method, form.action);
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState !== XMLHttpRequest.DONE) return;
+        form.reset();
+        document.getElementById('thankyou').classList.remove('hidden');
+        document.getElementById('submitBtn').style.display = 'none';
+      };
+      xhr.send(data);
+    });
+  </script>
+</body>
+</html>
