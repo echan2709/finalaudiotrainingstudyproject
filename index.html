@@ -137,22 +137,31 @@
       font-size: 1.05em;
       letter-spacing: 0.01em;
     }
-    .audio-block button {
-      background: var(--button-bg);
-      color: var(--navy-light);
+    .audio-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1em;
+      margin-top: 0.7em;
+    }
+    .play-btn, .pause-btn {
+      font-size: 1.12em;
+      font-weight: 600;
+      padding: 0.75em 2.1em;
       border: none;
       border-radius: 24px;
-      padding: 0.5em 1.5em;
-      font-size: 1em;
-      margin: 0.3em 0.2em;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
-      font-weight: 600;
-      outline: none;
-    }
-    .audio-block button:hover, .audio-block button:focus {
-      background: var(--button-hover);
+      background: var(--navy-light);
       color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(0,31,77,0.07);
+    }
+    .play-btn:hover, .play-btn:focus,
+    .pause-btn:hover, .pause-btn:focus {
+      background: var(--navy);
     }
     .answer-row {
       display: flex;
@@ -250,13 +259,13 @@
         <summary>About this Study</summary>
         <div class="about-content">
           <p>
-            <strong>Purpose:</strong> This study investigates the effectiveness of audio-based assessments in medical education, with a focus on pediatric respiratory health.
+            <strong>Purpose:</strong> This study examines the effectiveness of audio-based assessments in medical education, with a focus on pediatric respiratory health.
           </p>
           <p>
-            <strong>Background:</strong> Advances in biomedical research have identified vocal biomarkers that can help detect and monitor pathological conditions. By leveraging these insights, this study explores how audio recordings can enhance clinical training and diagnostic accuracy.
+            <strong>Background:</strong> Recent advances in biomedical research have identified vocal biomarkers that may assist in detecting and monitoring pathological conditions. This study explores how audio recordings can support clinical training and diagnostic accuracy.
           </p>
           <p>
-            <strong>Your Participation:</strong> You will listen to a series of audio clips. Some are from healthy infants, while others feature underlying respiratory pathology. For each pair, you will be asked to identify the healthy or pathological example.
+            <strong>Your Participation:</strong> You will listen to a series of audio clips. Some are from healthy infants, while others feature underlying respiratory pathology. For each pair, please identify the healthy or pathological example as instructed.
           </p>
           <p>
             <strong>Data Privacy:</strong> All responses are fully de-identified. No personal or identifying information will be collected or published.
@@ -290,17 +299,17 @@
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
             <audio id="audio1A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio1A')">Play</button>
-              <button type="button" onclick="pauseAudio('audio1A')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio1A')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio1A')">⏸ Pause</button>
             </div>
           </div>
           <div class="audio-block">
             <span class="audio-label">Audio B</span>
             <audio id="audio1B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingsoftgrunting.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio1B')">Play</button>
-              <button type="button" onclick="pauseAudio('audio1B')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio1B')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio1B')">⏸ Pause</button>
             </div>
           </div>
         </div>
@@ -325,17 +334,17 @@
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
             <audio id="audio2A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio2A')">Play</button>
-              <button type="button" onclick="pauseAudio('audio2A')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio2A')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio2A')">⏸ Pause</button>
             </div>
           </div>
           <div class="audio-block">
             <span class="audio-label">Audio B</span>
             <audio id="audio2B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio2B')">Play</button>
-              <button type="button" onclick="pauseAudio('audio2B')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio2B')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio2B')">⏸ Pause</button>
             </div>
           </div>
         </div>
@@ -360,17 +369,17 @@
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
             <audio id="audio3A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/healthybabycry.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio3A')">Play</button>
-              <button type="button" onclick="pauseAudio('audio3A')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio3A')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio3A')">⏸ Pause</button>
             </div>
           </div>
           <div class="audio-block">
             <span class="audio-label">Audio B</span>
             <audio id="audio3B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstrider.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio3B')">Play</button>
-              <button type="button" onclick="pauseAudio('audio3B')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio3B')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio3B')">⏸ Pause</button>
             </div>
           </div>
         </div>
@@ -395,17 +404,17 @@
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
             <audio id="audio4A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingsoftgrunting.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio4A')">Play</button>
-              <button type="button" onclick="pauseAudio('audio4A')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio4A')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio4A')">⏸ Pause</button>
             </div>
           </div>
           <div class="audio-block">
             <span class="audio-label">Audio B</span>
             <audio id="audio4B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio4B')">Play</button>
-              <button type="button" onclick="pauseAudio('audio4B')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio4B')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio4B')">⏸ Pause</button>
             </div>
           </div>
         </div>
@@ -430,17 +439,17 @@
           <div class="audio-block">
             <span class="audio-label">Audio A</span>
             <audio id="audio5A" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstronggrunting.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio5A')">Play</button>
-              <button type="button" onclick="pauseAudio('audio5A')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio5A')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio5A')">⏸ Pause</button>
             </div>
           </div>
           <div class="audio-block">
             <span class="audio-label">Audio B</span>
             <audio id="audio5B" src="https://echan2709.github.io/finalaudiotrainingstudyproject/cryingstrider.mp3?v=2"></audio>
-            <div>
-              <button type="button" onclick="playAudio('audio5B')">Play</button>
-              <button type="button" onclick="pauseAudio('audio5B')">Pause</button>
+            <div class="audio-controls">
+              <button type="button" class="play-btn" onclick="playAudio('audio5B')">⏵ Play</button>
+              <button type="button" class="pause-btn" onclick="pauseAudio('audio5B')">⏸ Pause</button>
             </div>
           </div>
         </div>
